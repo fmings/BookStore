@@ -66,5 +66,76 @@ namespace BookStore.Tests
             // The actualBook returned by the GetBookById method should be null.
             Assert.Null(actualBook);
         }
+
+        [Fact]
+        public void AddBook_ShouldReturnBook_WhenBookIsCreated()
+        {
+            // Arrange - means to set up the test
+            var newBook =
+             new Book()
+             {
+                 Title = "Test Title",
+                 Author = "Test Author"
+             };
+
+            // The Setup method is used to set up the behavior of the mock object.
+            _mockBookRepository.Setup(repo => repo.AddBook(newBook)).Returns(newBook);
+
+            // Act - means to run the test
+            // The AddBook method is called with the newBook parameter.
+            var actualBook = _bookService.AddBook(newBook);
+
+            // Assert - means to check the result
+            // The actualBook returned by the GetBookById method should be equal to newBook.
+            Assert.Equal(newBook, actualBook);
+        }
+
+        [Fact]
+        public void DeleteBook_ShouldReturnTrue_WhenBookIsDeleted()
+        {
+            // Arrange - means to set up the test
+            // The book with Id 99 does not exist in the repository
+            // Therefore, the GetBookById method should return null.
+            var bookId = 2;
+
+            // The Setup method is used to set up the behavior of the mock object.
+            _mockBookRepository.Setup(repo => repo.DeleteBook(bookId)).Returns(true);
+
+            // Act - means to run the test
+            // The GetBookById method is called with the bookId parameter.
+            var result = _bookService.DeleteBook(bookId);
+
+            // Assert - means to check the result
+            // The actualBook returned by the GetBookById method should be null.
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void UpdateBook_ShouldReturnBook_WhenBookIsUpdated()
+        {
+            // Arrange - means to set up the test
+            var bookId = 1;
+            var newTitle = "Test New Title";
+            var newAuthor = "Test New Author";
+
+            var expectedBook = new Book
+            {
+                Id = bookId,
+                Title = newTitle,
+                Author = newAuthor
+            };
+
+
+            // The Setup method is used to set up the behavior of the mock object.
+            _mockBookRepository.Setup(repo => repo.UpdateBook(bookId, newTitle, newAuthor)).Returns(true);
+
+            // Act - means to run the test
+            // The AddBook method is called with the newBook parameter.
+            var actualBook = _bookService.UpdateBook(bookId, newTitle, newAuthor);
+
+            // Assert - means to check the result
+            // The actualBook returned by the GetBookById method should be equal to newBook.
+            Assert.True(actualBook);
+        }
     }
 }
