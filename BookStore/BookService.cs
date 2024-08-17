@@ -25,5 +25,25 @@
         {
             return _bookRepository.GetBookById(id);
         }
+
+        public List<Book> GetAllBooks()
+        {
+            return _bookRepository.GetAllBooks();
+        }
+
+        public Book AddBook(Book book)
+        {
+            return _bookRepository.AddBook(book);
+        }
+
+        public bool UpdateBook(int id, string title, string author)
+        {
+            return (_bookRepository.UpdateBook(id, title, author));
+        }
+
+        public bool DeleteBook(int id)
+        {
+            return _bookRepository.DeleteBook(id); 
+        }
     }
 }
